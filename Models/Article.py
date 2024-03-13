@@ -1,23 +1,22 @@
 from Author import Author
-from Magazine import Magazine
+
 
 class Article:
-    all = []  
+    all = []  # Define 'all' as a class attribute
 
-    def __init__(self, author, magazine, title):
+    def __init__(self, author, title, magazine=None):
         if not isinstance(author, Author):
             raise ValueError("Author must be an instance of Author class")
-        if not isinstance(magazine, Magazine):
-            raise ValueError("Magazine must be an instance of Magazine class")
 
         if isinstance(title, str) and 5 <= len(title) <= 50:
             self.__title = title
         else:
             raise ValueError("Title must be a string between 5 and 50 characters long")
 
-        self.__author = author
-        self.__magazine = magazine
-        Article.all.append(self)  
+        self.__author = author  # Establish association with author
+        self.__magazine = magazine  # Optionally associate with a magazine
+        self.__author.add_article(self)  # Add this article to the author's list of articles
+        Article.all.append(self)  # Add this article to the list of all articles
 
     @property
     def title(self):
